@@ -16,5 +16,8 @@ class BaseApi:
     def put(self, endpoint, json=None, headers=None):
         return self.session.put(self.base_url + endpoint, json=json, headers=headers)
 
+    def patch(self, endpoint, json=None, headers=None):
+        return self.session.patch(self.base_url + endpoint, json=json, headers=headers)
+
     def delete(self, endpoint, headers=None):
         return self.session.delete(self.base_url + endpoint, headers=headers)
