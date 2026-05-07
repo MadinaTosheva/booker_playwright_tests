@@ -1,4 +1,55 @@
+import pytest
+
+from config.api_data import USERNAME, PASSWORD, WRONG_PASSWORD, WRONG_USERNAME, \
+    BOOKING_DATA, UPDATED_BOOKING_DATA, BOOKING_ID, VALID_TOKEN, INVALID_TOKEN
+from utils.assertions import assert_status_code, assert_field_contains, \
+    assert_key_value, assert_token
+
+
 class TestAuth:
 
-    def test_tc_auth_001(self):
-        pass
+    @pytest.mark.parametrize("username, password",
+                             [(USERNAME, PASSWORD),
+                             (USERNAME, WRONG_PASSWORD),
+                             (WRONG_USERNAME, PASSWORD)])
+
+    def test_tc_auth_001_002_003(self, auth_api, username, password):
+
+        response = auth_api.create_token(username, password)
+        assert_status_code(response, 200)
+        assert_field_contains(response, "token")
+        token = response.json()["token"]
+
+    def test_tc_auth_004(self, booking_api):
+
+        update = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA,
+                                            VALID_TOKEN)
+        assert_status_code(update, 200)
+        assert_key_value(update, "firstname", "Саша")
+
+
+    def test_tc_auth_005(self, booking_api):
+
+        update = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA,
+                                            INVALID_TOKEN)
+        assert_status_code(update, 403)
+
+
+    def test_tc_auth_006(self, booking_api):
+
+        update = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA)
+        assert_status_code(update, 403)
+
+
+    def test_tc_auth_007(self, auth_api):
+
+        response = auth_api.create_token(USERNAME, PASSWORD)
+        assert_status_code(response, 200)
+        assert_field_contains(response, "token")
+        token = response.json()["token"]
+        assert_token(token)
+
+    def test_tc_auth_008(self, auth_api):
+
+        for i in range(2):
+            self.test_tc_auth_007(auth_api)

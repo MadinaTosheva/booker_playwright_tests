@@ -10,7 +10,7 @@ class BookingApi(BaseApi):
     def get_booking(self, booking_id):
         return self.get(f"{BOOKING_ENDPOINT}/{booking_id}")
 
-    def update_booking(self, booking_id, data, token):
+    def update_booking(self, booking_id, data, token = None):
         headers = {"Cookie": f"token={token}"}
         return self.put(f"{BOOKING_ENDPOINT}/{booking_id}", json=data, headers=headers)
 
