@@ -16,3 +16,7 @@ def assert_key_value(response, key, value):
 
 def assert_schema(response, schema):
     validate(instance=response.json(), schema=schema)
+
+
+def assert_token(token):
+    assert isinstance(token, str) and len(token) > 0

@@ -47,15 +47,3 @@ def test_tc_e2e(auth_api, booking_api):
 
     assert response.elapsed.total_seconds() < 2.0
     assert "application/json" in response.headers["Content-Type"]
-
-
-
-
-
-
-
-
-
-
-
-
