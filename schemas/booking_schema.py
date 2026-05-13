@@ -44,3 +44,16 @@ GET_BOOKING_SCHEMA = {
             },
             "required": ["firstname", "lastname"]
         }
+
+
+GET_ALL_BOOKINGS_SCHEMA = {
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+                "bookingid": {"type": "integer"}
+        },
+        "required": ["bookingid"]
+    }
+
+}

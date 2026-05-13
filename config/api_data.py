@@ -7,6 +7,7 @@ VALID_TOKEN = "df33a3590a0760f"
 INVALID_TOKEN = "wrong_token"
 
 BOOKING_ID = 123
+INVALID_BOOKING_ID = 10000000
 
 BOOKING_DATA = {"firstname":"John",
                 "lastname":"Doe",

@@ -7,8 +7,8 @@ class BaseApi:
         self.base_url = base_url
         self.session = requests.Session()
 
-    def get(self, endpoint):
-        return self.session.get(self.base_url + endpoint)
+    def get(self, endpoint, params= None):
+        return self.session.get(self.base_url + endpoint, params = params)
 
     def post(self, endpoint, json=None):
         return self.session.post(self.base_url + endpoint, json=json)
