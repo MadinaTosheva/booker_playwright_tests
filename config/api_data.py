@@ -15,6 +15,11 @@ BOOKING_DATA = {"firstname":"John",
                 "depositpaid":True,
                 "bookingdates":{"checkin":"2026-01-01","checkout":"2026-01-05"}}
 
+MINIMUM_BOOKING_DATA = {"firstname":"John",
+                "lastname":"Doe",
+                "totalprice":100,
+                "bookingdates":{"checkin":"2026-01-01","checkout":"2026-01-05"}}
+
 UPDATED_BOOKING_DATA = {"firstname":"Саша",
                 "lastname":"Мирнов",
                 "totalprice":200,
