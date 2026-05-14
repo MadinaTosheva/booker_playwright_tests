@@ -20,3 +20,12 @@ def assert_schema(response, schema):
 
 def assert_token(token):
     assert isinstance(token, str) and len(token) > 0
+
+def assert_header(response):
+    header = response.headers
+    assert "Content-Length" in header
+    assert "Content-Type" in header
+
+def assert_response_time(response):
+    response_time = response.elapsed.total_seconds()
+    assert response_time < 2.0, f"Response time was {response_time}"
