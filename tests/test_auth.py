@@ -12,7 +12,7 @@ from utils.assertions import assert_status_code, assert_field_contains, \
 class TestAuth:
 
     @allure.story("Create token")
-    @allure.title("Authorize with different credentials(username and password)")
+    @allure.title("Authorize with different credentials('username' and 'password')")
     @pytest.mark.parametrize("username, password",
                              [(USERNAME, PASSWORD),
                              (USERNAME, WRONG_PASSWORD),

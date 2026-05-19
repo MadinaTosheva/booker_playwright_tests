@@ -6,7 +6,7 @@ from config.api_urls import AUTH_ENDPOINT
 
 class AuthApi(BaseApi):
 
-    @allure.step("Create token with username = {username} and password = {password}")
+    @allure.step("Create token with username: '{username}' and password: '{password}'")
     def create_token(self, username, password):
 
         payload = {
