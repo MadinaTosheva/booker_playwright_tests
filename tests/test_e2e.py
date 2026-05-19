@@ -1,10 +1,14 @@
+import allure
+
 from config.api_data import USERNAME, PASSWORD, BOOKING_DATA, \
     UPDATED_BOOKING_DATA, PARTIAL_UPDATED_BOOKING_DATA
 from schemas.booking_schema import GET_BOOKING_SCHEMA
 from utils.assertions import assert_status_code, assert_field_contains, \
     assert_key_value, assert_schema
 
-
+@allure.epic("Booking API")
+@allure.feature("E2E")
+@allure.title("Make E2E testing")
 def test_tc_e2e(auth_api, booking_api):
 
     response = auth_api.create_token(USERNAME, PASSWORD)
