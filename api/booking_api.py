@@ -19,15 +19,15 @@ class BookingApi(BaseApi):
 
     @allure.step("Update booking with data: '{data}'")
     def update_booking(self, booking_id: int, data: str, token: str = None):
-        headers = {"Cookie": f"token={token}"}
+        headers = {"Cookie": f"token={token}"} if token else None
         return self.put(f"{BOOKING_ENDPOINT}/{booking_id}", json=data, headers=headers)
 
     @allure.step("Partial update booking with data: '{data}'")
-    def partial_update_booking(self, booking_id: int, data: str, token: str):
-        headers = {"Cookie": f"token={token}"}
+    def partial_update_booking(self, booking_id: int, data: str, token: str = None):
+        headers = {"Cookie": f"token={token}"} if token else None
         return self.patch(f"{BOOKING_ENDPOINT}/{booking_id}", json=data, headers=headers)
 
     @allure.step("Delete booking by id: '{booking_id}'")
     def delete_booking(self, booking_id: int, token: str):
-        headers = {"Cookie": f"token={token}"}
+        headers = {"Cookie": f"token={token}"} if token else None
         return self.delete(f"{BOOKING_ENDPOINT}/{booking_id}" , headers=headers)
