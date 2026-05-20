@@ -28,6 +28,6 @@ class BookingApi(BaseApi):
         return self.patch(f"{BOOKING_ENDPOINT}/{booking_id}", json=data, headers=headers)
 
     @allure.step("Delete booking by id: '{booking_id}'")
-    def delete_booking(self, booking_id: int, token: str):
+    def delete_booking(self, booking_id: int, token: str = None):
         headers = {"Cookie": f"token={token}"} if token else None
         return self.delete(f"{BOOKING_ENDPOINT}/{booking_id}" , headers=headers)
