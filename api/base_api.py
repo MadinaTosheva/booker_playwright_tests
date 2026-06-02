@@ -7,6 +7,7 @@ class BaseApi:
     def __init__(self, base_url):
         self.base_url = base_url
         self.session = requests.Session()
+        self.session.verify = False
 
     @allure.step("Отправить GET запрос на роут '{endpoint}'")
     def get(self, endpoint, params=None):
