@@ -20,10 +20,9 @@ class TestUpdate:
 
     @allure.title("Totally update booking with token")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_tc_put_001(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_put_001(self, auth_booking_api):
 
-        put = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA)
+        put = auth_booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA)
         assert_status_code(put, 200)
         assert_key_value(put, "firstname", "Саша")
         assert_key_value(put, "lastname", "Мирнов")
@@ -32,82 +31,77 @@ class TestUpdate:
 
     @allure.title("Partially update booking with token")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_put_002(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_put_002(self, auth_booking_api):
 
-        patch = booking_api.partial_update_booking(BOOKING_ID, PARTIAL_UPDATED_BOOKING_DATA)
+        patch = auth_booking_api.partial_update_booking(BOOKING_ID, PARTIAL_UPDATED_BOOKING_DATA)
         assert_status_code(patch, 200)
         assert_key_value(patch, "firstname", "James")
         assert_key_value(patch, "lastname", "Smith")
 
     @allure.title("Update not existed booking with token")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_tc_put_003(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_put_003(self, auth_booking_api):
 
-        put = booking_api.update_booking(INVALID_BOOKING_ID, UPDATED_BOOKING_DATA)
+        put = auth_booking_api.update_booking(INVALID_BOOKING_ID, UPDATED_BOOKING_DATA)
         assert_status_code(put, 405)
 
     @allure.title("Update booking without token")
     @allure.severity(allure.severity_level.CRITICAL)
     def test_tc_put_004(self, booking_api):
+
         update = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA)
         assert_status_code(update, 403)
 
     @allure.title("Update booking with invalid token")
     @allure.severity(allure.severity_level.CRITICAL)
     def test_tc_put_005(self, booking_api):
+
         update = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA,
                                             INVALID_TOKEN)
         assert_status_code(update, 403)
 
     @allure.title("Update booking with invalid data")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_put_006(self, booking_api, auth_session):
-        booking_api.session = auth_session
+    def test_tc_put_006(self, auth_booking_api):
 
-        update = booking_api.update_booking(BOOKING_ID, INVALID_BOOKING_DATA)
+        update = auth_booking_api.update_booking(BOOKING_ID, INVALID_BOOKING_DATA)
         assert_status_code(update, 405)
 
     @allure.title("Partially update booking with 'bookingdates'")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_put_007(self, booking_api, auth_session):
-        booking_api.session = auth_session
+    def test_tc_put_007(self, auth_booking_api):
 
         payload = deepcopy(BOOKING_DATA)
         payload["bookingdates"] = {"checkin": "2026-05-01",
                                    "checkout": "2026-05-30"}
 
-        put = booking_api.update_booking(BOOKING_ID, payload)
+        put = auth_booking_api.update_booking(BOOKING_ID, payload)
         assert_status_code(put, 200)
 
     @allure.title("Validate booking schema after updation")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_put_008(self, booking_api, auth_session):
-        booking_api.session = auth_session
+    def test_tc_put_008(self, auth_booking_api):
 
-        put = booking_api.update_booking(BOOKING_ID,UPDATED_BOOKING_DATA)
+        put = auth_booking_api.update_booking(BOOKING_ID,UPDATED_BOOKING_DATA)
         assert_status_code(put, 200)
         assert_schema(put, GET_BOOKING_SCHEMA)
 
     @allure.title("Update single field- totalprice")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_patch_001(self, booking_api, auth_session):
-        booking_api.session = auth_session
+    def test_tc_patch_001(self, auth_booking_api):
 
         payload = {"totalprice": 500}
 
-        patch = booking_api.update_booking(BOOKING_ID, payload)
+        patch = auth_booking_api.partial_update_booking(BOOKING_ID, payload)
         assert_status_code(patch, 200)
         assert_key_value(patch, "totalprice", 500)
 
     @allure.title("Update single field- depositpaid")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_patch_002(self, booking_api, auth_session):
-        booking_api.session = auth_session
+    def test_tc_patch_002(self, auth_booking_api):
 
         payload =  {"depositpaid": False}
 
-        patch = booking_api.update_booking(BOOKING_ID, payload)
+        patch = auth_booking_api.partial_update_booking(BOOKING_ID, payload)
         assert_status_code(patch, 200)
         assert_key_value(patch, "depositpaid", False)

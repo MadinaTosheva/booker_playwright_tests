@@ -16,7 +16,9 @@ def auth_session(auth_api):
     auth_api.session.cookies.set("token", token)
 
     # 3. возвращаем session
-    return auth_api.session
+    yield auth_api.session
+
+    auth_api.session.close()
 
 
 @pytest.fixture
@@ -27,3 +29,10 @@ def auth_api():
 @pytest.fixture
 def booking_api():
     return BookingApi(BASE_URL)
+
+
+@pytest.fixture
+def auth_booking_api(auth_session):
+    api = BookingApi(BASE_URL)
+    api.session = auth_session
+    return api

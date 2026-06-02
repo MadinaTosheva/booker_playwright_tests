@@ -13,36 +13,33 @@ class TestDelete:
 
     @allure.title("Delete existing booking with token")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_tc_delete_001(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_delete_001(self, auth_booking_api):
 
-        delete = booking_api.delete_booking(BOOKING_ID + 1)
+        delete = auth_booking_api.delete_booking(BOOKING_ID + 1)
         assert_status_code(delete, 201)
 
     @allure.title("Validate deleted booking not exists")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_tc_delete_002(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_delete_002(self, auth_booking_api):
 
-        delete = booking_api.delete_booking(BOOKING_ID + 2)
+        delete = auth_booking_api.delete_booking(BOOKING_ID + 2)
         assert_status_code(delete, 201)
 
-        get = booking_api.get_booking(BOOKING_ID + 2)
+        get = auth_booking_api.get_booking(BOOKING_ID + 2)
         assert_status_code(get, 404)
 
     @allure.title("Delete not existed booking")
     @allure.severity(allure.severity_level.CRITICAL)
-    def test_tc_delete_003(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_delete_003(self, auth_booking_api):
 
-        delete = booking_api.delete_booking(INVALID_BOOKING_ID)
+        delete = auth_booking_api.delete_booking(INVALID_BOOKING_ID)
         assert_status_code(delete, 405)
 
     @allure.title("Delete booking without token")
     @allure.severity(allure.severity_level.CRITICAL)
     def test_tc_delete_004(self, booking_api):
 
-        delete = booking_api.delete_booking(BOOKING_ID )
+        delete = booking_api.delete_booking(BOOKING_ID)
         assert_status_code(delete, 403)
 
     @allure.title("Delete booking with invalid token")
@@ -54,20 +51,18 @@ class TestDelete:
 
     @allure.title("Delete same booking 2 times")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_delete_006(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_delete_006(self, auth_booking_api):
 
-        delete = booking_api.delete_booking(BOOKING_ID + 3)
+        delete = auth_booking_api.delete_booking(BOOKING_ID + 3)
         assert_status_code(delete, 201)
 
-        delete2 = booking_api.delete_booking(BOOKING_ID + 3)
+        delete2 = auth_booking_api.delete_booking(BOOKING_ID + 3)
         assert_status_code(delete2, 404)
 
     @allure.title("Validate delete response")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_tc_delete_007(self, auth_session, booking_api):
-        booking_api.session = auth_session
+    def test_tc_delete_007(self, auth_booking_api):
 
-        delete = booking_api.delete_booking(BOOKING_ID + 4)
+        delete = auth_booking_api.delete_booking(BOOKING_ID + 4)
         assert_status_code(delete, 201)
         assert_field_contains(delete, "")
