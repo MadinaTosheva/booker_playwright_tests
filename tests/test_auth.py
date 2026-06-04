@@ -27,9 +27,9 @@ class TestAuth:
 
     @allure.story("Update booking")
     @allure.title("Update booking with valid token")
-    def test_tc_auth_004(self, booking_api):
+    def test_tc_auth_004(self, auth_booking_api):
 
-        update = booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA,
+        update = auth_booking_api.update_booking(BOOKING_ID, UPDATED_BOOKING_DATA,
                                             VALID_TOKEN)
         assert_status_code(update, 200)
         assert_key_value(update, "firstname", "Саша")
