@@ -23,12 +23,16 @@ def auth_session(auth_api):
 
 @pytest.fixture
 def auth_api():
-    return AuthApi(BASE_URL)
+    api = AuthApi(BASE_URL)
+    api.session.verify = False  # чтобы сертификаты не проверялись
+    return api
 
 
 @pytest.fixture
 def booking_api():
-    return BookingApi(BASE_URL)
+    api =  BookingApi(BASE_URL)
+    api.session.verify = False  # чтобы сертификаты не проверялись
+    return api
 
 
 @pytest.fixture
